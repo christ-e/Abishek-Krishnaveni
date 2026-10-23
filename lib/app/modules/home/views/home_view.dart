@@ -27,24 +27,16 @@ class HomeView extends GetView<HomeController> {
         return Stack(
           children: [
             // 1. Main Invitation View (always rendered and ready beneath)
-            Positioned.fill(
-              child: FloatingParticlesOverlay(
-                child: _buildInvitationContent(context),
-              ),
-            ),
+            Positioned.fill(child: FloatingParticlesOverlay(child: _buildInvitationContent(context))),
 
             // 2. Interactive Opening Envelope with 3D Wax Seal Flap
-            if (!isOpened)
-              const Positioned.fill(
-                child: EnvelopeCoverView(),
-              ),
+            if (!isOpened) const Positioned.fill(child: EnvelopeCoverView()),
 
             // 3. Floating Music Player (visible when invitation is open)
-            if (isOpened)
-              const FloatingAudioWidget(),
+            if (isOpened) const Positioned(bottom: 24, right: 16, child: FloatingAudioWidget()),
 
             // 4. Fullscreen Image Lightbox Modal
-            const GalleryLightbox(),
+            const Positioned.fill(child: GalleryLightbox()),
           ],
         );
       }),
@@ -61,25 +53,11 @@ class HomeView extends GetView<HomeController> {
         decoration: BoxDecoration(
           color: WeddingColors.creamPrimary,
           borderRadius: isDesktop ? BorderRadius.circular(24) : BorderRadius.zero,
-          border: isDesktop
-              ? Border.all(
-                  color: WeddingColors.goldBorder.withOpacity(0.6),
-                  width: 2,
-                )
-              : null,
+          border: isDesktop ? Border.all(color: WeddingColors.goldBorder.withOpacity(0.6), width: 2) : null,
           boxShadow: isDesktop
               ? [
-                  BoxShadow(
-                    color: Colors.black.withOpacity(0.4),
-                    blurRadius: 40,
-                    spreadRadius: 8,
-                    offset: const Offset(0, 16),
-                  ),
-                  BoxShadow(
-                    color: WeddingColors.goldPrimary.withOpacity(0.12),
-                    blurRadius: 50,
-                    spreadRadius: 2,
-                  ),
+                  BoxShadow(color: Colors.black.withOpacity(0.4), blurRadius: 40, spreadRadius: 8, offset: const Offset(0, 16)),
+                  BoxShadow(color: WeddingColors.goldPrimary.withOpacity(0.12), blurRadius: 50, spreadRadius: 2),
                 ]
               : null,
         ),

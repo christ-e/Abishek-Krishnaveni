@@ -6,7 +6,7 @@ import 'package:get/get.dart';
 import '../../../data/wedding_data.dart';
 
 class HomeController extends GetxController {
-  // Envelope State
+  // Envelope State (Default opened for instant presentation; replayable anytime)
   final isEnvelopeOpened = false.obs;
   final isOpeningAnimationRunning = false.obs;
 
@@ -20,7 +20,11 @@ class HomeController extends GetxController {
   // Music Player State
   final isMusicPlaying = false.obs;
   final isAudioInitialized = false.obs;
+  final currentTrackIndex = 0.obs;
   AudioPlayer? _audioPlayer;
+
+  AudioTrack get currentTrack =>
+      WeddingData.audioTracks[currentTrackIndex.value];
 
   // Celebration / Confetti Shower State
   final celebrationCount = 0.obs;
@@ -63,7 +67,7 @@ class HomeController extends GetxController {
     try {
       _audioPlayer = AudioPlayer();
       await _audioPlayer?.setReleaseMode(ReleaseMode.loop);
-      await _audioPlayer?.setVolume(0.7);
+      await _audioPlayer?.setVolume(0.75);
 
       _audioPlayer?.onPlayerStateChanged.listen((state) {
         isMusicPlaying.value = (state == PlayerState.playing);
@@ -79,7 +83,7 @@ class HomeController extends GetxController {
     if (isOpeningAnimationRunning.value || isEnvelopeOpened.value) return;
     isOpeningAnimationRunning.value = true;
 
-    // Trigger celebration / audio play upon user gesture
+    // Trigger audio play upon user gesture
     playMusic();
 
     // Give time for envelope seal breaking & flap opening animation
@@ -104,17 +108,47 @@ class HomeController extends GetxController {
     }
   }
 
+  Future<void> changeTrack(int index) async {
+    if (index < 0 || index >= WeddingData.audioTracks.length) return;
+    currentTrackIndex.value = index;
+    try {
+      await _audioPlayer?.stop();
+      await playMusic();
+      Get.snackbar(
+        "Now Playing 🎵",
+        "${currentTrack.title} • ${currentTrack.subtitle}",
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: WeddingColors.emeraldPrimary.withValues(alpha: 0.95),
+        colorText: WeddingColors.goldLight,
+        margin: const EdgeInsets.all(16),
+        duration: const Duration(seconds: 3),
+        icon: const Icon(Icons.music_note, color: WeddingColors.goldPrimary),
+      );
+    } catch (e) {
+      debugPrint("Change track error: $e");
+    }
+  }
+
+  void nextTrack() {
+    final nextIndex = (currentTrackIndex.value + 1) % WeddingData.audioTracks.length;
+    changeTrack(nextIndex);
+  }
+
   Future<void> playMusic() async {
     try {
       if (_audioPlayer == null) {
         await _initAudio();
       }
-      // Try playing local asset first
+      final track = currentTrack;
       try {
-        await _audioPlayer?.play(AssetSource('audio/wedding_bgm.mp3'));
+        await _audioPlayer?.play(AssetSource(track.assetSource));
       } catch (assetError) {
-        debugPrint("Asset audio error, falling back to remote url: $assetError");
-        await _audioPlayer?.play(UrlSource(WeddingData.remoteAudioUrl));
+        debugPrint("Asset audio notice, trying remote fallback: $assetError");
+        if (track.remoteFallbackUrl.isNotEmpty) {
+          await _audioPlayer?.play(UrlSource(track.remoteFallbackUrl));
+        } else {
+          await _audioPlayer?.play(UrlSource(WeddingData.remoteAudioUrl));
+        }
       }
       isMusicPlaying.value = true;
     } catch (e) {

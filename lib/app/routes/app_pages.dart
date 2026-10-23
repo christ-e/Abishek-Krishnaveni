@@ -16,5 +16,10 @@ class AppPages {
       page: () => const HomeView(),
       binding: HomeBinding(),
     ),
+    GetPage(
+      name: '/home',
+      page: () => const HomeView(),
+      binding: HomeBinding(),
+    ),
   ];
 }

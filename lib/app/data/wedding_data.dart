@@ -110,6 +110,22 @@ class GalleryItem {
   });
 }
 
+class AudioTrack {
+  final String id;
+  final String title;
+  final String subtitle;
+  final String assetSource;
+  final String remoteFallbackUrl;
+
+  const AudioTrack({
+    required this.id,
+    required this.title,
+    required this.subtitle,
+    required this.assetSource,
+    this.remoteFallbackUrl = "",
+  });
+}
+
 class WeddingData {
   // Couple Names
   static const String groomName = "Abishek";
@@ -131,9 +147,20 @@ class WeddingData {
   // Wedding Date & Countdown Target (Dec 24, 2026 at 10:30 AM)
   static final DateTime weddingDateTime = DateTime(2026, 12, 24, 10, 30);
 
-  // Audio BGM
-  static const String localAudioPath = "assets/audio/wedding_bgm.mp3";
-  static const String remoteAudioUrl = "https://ajay-weds-henna.themelon-in.workers.dev/assets/audio/bgm.mp3";
+  // Audio Track - Acoustic Love Strings
+  static const List<AudioTrack> audioTracks = [
+    AudioTrack(
+      id: "romantic_guitar",
+      title: "Acoustic Love Strings",
+      subtitle: "Emotional Romantic Acoustic Guitar",
+      assetSource: "audio/romantic_acoustic_guitar.mp3",
+      remoteFallbackUrl: "https://assets.mixkit.co/music/854/854.mp3",
+    ),
+  ];
+
+  // Default audio backwards compatibility
+  static const String localAudioPath = "assets/audio/romantic_acoustic_guitar.mp3";
+  static const String remoteAudioUrl = "https://assets.mixkit.co/music/854/854.mp3";
 
   // Images
   static const String mainCoupleImage = "assets/images/couple_main.jpg";
