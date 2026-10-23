@@ -103,11 +103,7 @@ class GalleryItem {
   final String title;
   final String caption;
 
-  const GalleryItem({
-    required this.imagePath,
-    required this.title,
-    required this.caption,
-  });
+  const GalleryItem({required this.imagePath, required this.title, required this.caption});
 }
 
 class AudioTrack {
@@ -117,13 +113,7 @@ class AudioTrack {
   final String assetSource;
   final String remoteFallbackUrl;
 
-  const AudioTrack({
-    required this.id,
-    required this.title,
-    required this.subtitle,
-    required this.assetSource,
-    this.remoteFallbackUrl = "",
-  });
+  const AudioTrack({required this.id, required this.title, required this.subtitle, required this.assetSource, this.remoteFallbackUrl = ""});
 }
 
 class WeddingData {
@@ -134,8 +124,7 @@ class WeddingData {
 
   // Auspicious Hindu Blessing Mantras
   static const String shlokaInvocation = "|| ॐ श्री गणेशाय नमः ||";
-  static const String mangalyamShloka =
-      "मांगल्यं तन्तुनानेन मम जीवनहेतुना ।\nकंठे बध्नामि सुभगे त्वं जीव शरदः शतम् ॥";
+  static const String mangalyamShloka = "मांगल्यं तन्तुनानेन मम जीवनहेतुना ।\nकंठे बध्नामि सुभगे त्वं जीव शरदः शतम् ॥";
   static const String mangalyamTranslation =
       "\"This sacred thread, the pledge of my life, I tie around your neck, O auspicious one; may you live happily for a hundred autumns with me.\"";
 
@@ -183,7 +172,8 @@ class WeddingData {
       googleMapsUrl: "https://maps.app.goo.gl/WJ9UotwKSvnDSZoh9?g_st=aw",
       dateTime: DateTime(2026, 12, 24, 10, 30),
       calendarTitle: "Thalikettu Ceremony: Abishek & KrishnaVeni",
-      calendarDescription: "Sacred Thalikettu (Muhurtham) of Abishek & KrishnaVeni at Thirumoozhikkulam Sri Lakshmana Perumal Temple, followed by rituals & feast at S.N.D.P Auditorium Kurumassery.",
+      calendarDescription:
+          "Sacred Thalikettu (Muhurtham) of Abishek & KrishnaVeni at Thirumoozhikkulam Sri Lakshmana Perumal Temple, followed by rituals & feast at S.N.D.P Auditorium Kurumassery.",
       icon: Icons.favorite_rounded,
     ),
     EventItem(
@@ -213,7 +203,7 @@ class WeddingData {
     parents: "Baburaj M. S. & Sangeetha Baburaj",
     address: "Mekkonath House, Kurumassery P.O, Kurumassery",
     siblings: "Adwaitha M. B.",
-    phone: "+919846000001",
+    phone: "+919747162784",
   );
 
   static const FamilyInfo brideFamily = FamilyInfo(
@@ -222,33 +212,17 @@ class WeddingData {
     parents: "Unnikrishnan T. S. & Viji Unnikrishnan",
     address: "Thekkumkattil (H), Chettikulam, Vattapparambu P.O",
     siblings: "Krishnavaiga",
-    phone: "+919846000002",
+    phone: "",
   );
 
   static const String siblingsWarmRegards = "Adwaitha M. B. & Krishnavaiga";
 
   // Gallery
   static final List<GalleryItem> galleryItems = [
-    GalleryItem(
-      imagePath: mainCoupleImage,
-      title: "Soulmates by the Ocean",
-      caption: "Two hearts beating as one under the endless horizon",
-    ),
-    GalleryItem(
-      imagePath: story1Image,
-      title: "Golden Smiles",
-      caption: "Moments of shared joy and tender whispers",
-    ),
-    GalleryItem(
-      imagePath: story2Image,
-      title: "Together in Love",
-      caption: "Walking side by side into a beautiful new dawn",
-    ),
-    GalleryItem(
-      imagePath: cardPosterImage,
-      title: "Sacred Lotus & Peacock Feather",
-      caption: "Divinely blessed union — Abishek & KrishnaVeni",
-    ),
+    GalleryItem(imagePath: mainCoupleImage, title: "Soulmates by the Ocean", caption: "Two hearts beating as one under the endless horizon"),
+    GalleryItem(imagePath: story1Image, title: "Golden Smiles", caption: "Moments of shared joy and tender whispers"),
+    GalleryItem(imagePath: story2Image, title: "Together in Love", caption: "Walking side by side into a beautiful new dawn"),
+    GalleryItem(imagePath: cardPosterImage, title: "Sacred Lotus & Peacock Feather", caption: "Divinely blessed union — Abishek & KrishnaVeni"),
   ];
 
   static const String blessingsWhatsAppMessage =
